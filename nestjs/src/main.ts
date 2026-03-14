@@ -7,7 +7,8 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  app.enableCors({ origin: 'http://localhost:3000', credentials: true });
+  const allowedOrigin = process.env.CLIENT_URL ?? 'http://localhost:3000';
+  app.enableCors({ origin: allowedOrigin, credentials: true });
   app.use(cookieParser());
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }));
 
@@ -18,8 +19,8 @@ async function bootstrap() {
     .build();
   SwaggerModule.setup('swagger', app, SwaggerModule.createDocument(app, config));
 
-  await app.listen(3002);
-  console.log('NestJS running on http://localhost:3002');
-  console.log('Swagger docs at http://localhost:3002/swagger');
+  const port = process.env.PORT ?? 3002;
+  await app.listen(port);
+  console.log(`NestJS running on port ${port}`);
 }
 bootstrap();
