@@ -1,0 +1,27 @@
+{
+  "name": "gurinder-school-app",
+  "version": "1.0.0",
+  "private": true,
+  "packageManager": "npm@10.9.2",
+  "workspaces": [
+    "nestjs",
+    "client"
+  ],
+  "engines": {
+    "node": ">=22",
+    "npm": ">=10"
+  },
+  "scripts": {
+    "start": "turbo start",
+    "build": "turbo build",
+    "lint": "turbo lint",
+    "test": "turbo test",
+    "db:up": "docker compose -f ./setup/docker-compose.yml up -d",
+    "db:down": "docker compose -f ./setup/docker-compose.yml down",
+    "db:dump": "docker exec -t db pg_dump -U gs_master -d gs_school > ./setup/backup-local.sql",
+    "db:restore": "docker exec -i db psql -U gs_master -d gs_school < ./setup/backup-local.sql"
+  },
+  "devDependencies": {
+    "turbo": "^2.0.0"
+  }
+}

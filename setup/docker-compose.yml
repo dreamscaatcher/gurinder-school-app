@@ -1,0 +1,14 @@
+services:
+  db:
+    image: postgres:15.5
+    environment:
+      POSTGRES_USER: gs_master
+      POSTGRES_PASSWORD: "12345678"
+      POSTGRES_DB: gs_school
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
